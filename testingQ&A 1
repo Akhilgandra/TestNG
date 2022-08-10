@@ -1,0 +1,53 @@
+1. What are the different types of Maven Plugins?
+
+Answer:
+
+The different types of Maven plugins are listed below:
+
+Building Plugins: These plugins are used at the time of build and are defined in the building element of the pom file.
+Reporting Plugins: These plugins are used at the time of site generation and are defined in the reporting element of the pom file.
+
+2. Name the build phases in Maven Build Lifecycle.
+
+Answer: The build phases in Maven Build Lifecycle are listed down:
+
+Validate: Checks if all the preconditions information to trigger the build is obtained.
+Compile: Project source code is compiled.
+Test: The Source code that is compiled is tested with the unit test framework. In this phase, the code is not deployed or packaged.
+Package: Source code after compilation is packaged in the form of ZIP or JAR files.
+Integration- test: After the package is deployed in an environment, the integration test cases are executed.
+Verify: Examines to ensure that the package is correct and it meets all the required quality specifications.
+Install: Installation of packages into the local repository.
+Deploy: A specimen of the final package is made accessible to the remote repository for distribution among the other developers across projects.
+
+3. What is the purpose of command mvn clean in Maven?
+
+Answer: mvn clean aims to clean the project artifacts created by the previous Maven builds from the target directories. This is generally executed before initiating a new build process.
+
+4. What do you mean by a Maven Repository?
+
+Answer: Maven repository is the location of a directory where all the related project artifacts, jars, libraries, plugins are kept and can be utilized by Maven easily.
+
+5. Explain the various types of Maven Repositories.
+
+Answer: There are three types of Maven repositories.
+
+They are:
+
+Local Repository: This is placed in our local machine generally in the .m2 directory. This is generated once we are able to execute a Maven command successfully. All the project dependencies reside here. Once Maven scans the pom file, it first searches for its dependencies in the local repository.
+Central Repository: This is supplied by Apache Maven. It contains most of the routinely used libraries. Once any of the dependencies are not found in the local repository, then Maven connects to a central repository.
+Remote Repository: Sometimes companies develop their own custom repository comprising of their project artifacts, jars, and libraries. This is a type of repository that remains private for use inside that organization.
+
+6. Selenium Automation - Exception - Element Isn’t Loaded Completely
+In dynamic applications, elements are loaded on the fly. This means that all the elements you see aren’t completely ready. In such cases, if you try to click on the element, you’ll get the error. The solution to avoid this is to wait until the element is loaded completely. 
+
+7.What Causes the “Element Is Not Clickable at Point” Error?
+Solution is to make sure that the overlapping element is closed before you try to click on another element. Another solution is to switch to the layer that contains the element you want to click.
+
+8. Challenges faced in Automation
+
+9. Handle Untrusted Certificate Selenium
+
+10. Data-Driven Framework: In data-driven frameworks, test data is separated from test scripts and stored in an external resource such as text file, excel spreadsheet, CSV file or database table.
+
+11. Keyword Driven Framework: In keyword driven frameworks, the test logic is divided into keywords and functions. A sequence of keywords is used to define the test scripts and these keywords are further defined as functions to implement the desired behaviour.
