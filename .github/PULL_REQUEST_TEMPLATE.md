@@ -6,7 +6,7 @@
 
 💡 Additional Considerations
 
-🔄 Types of changes
+🔄 TYPES OF CHANGES
 
 .Cleanup (formatting, renaming)
 
