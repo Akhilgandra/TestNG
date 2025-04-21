@@ -1,0 +1,32 @@
+// https://containers.dev/implementors/json_reference/
+
+{
+  "name": "selenium-devcontainer",
+  "build": {
+    "dockerfile": "../scripts/dev-image/Dockerfile"
+  },
+  "runArgs": ["--name", "selenium_devcontainer"]
+}
+
+
+//Explanation of the JSON fields:
+name:
+
+The name of the development container. In this case, it is "selenium-devcontainer".
+This is used for identification purposes when working with multiple containers.
+build:
+
+Specifies how the container image should be built.
+dockerfile:
+Points to the location of the Dockerfile used to build the container.
+Here, ../scripts/dev-image/Dockerfile is the relative path to the Dockerfile. This file likely contains the instructions to set up the container environment for Selenium development.
+runArgs:
+
+Specifies additional arguments to pass when running the container.
+--name selenium_devcontainer:
+This sets the name of the running container to selenium_devcontainer for easier identification.
+Usage:
+When opened in VS Code with the Remote - Containers extension, this configuration tells VS Code:
+To build the Docker image using the provided Dockerfile.
+To run the resulting container with the specified name (selenium_devcontainer).
+This setup ensures that all developers working on the Selenium project have a consistent environment, regardless of their local machine configuration.//
