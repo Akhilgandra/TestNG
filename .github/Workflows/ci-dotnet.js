@@ -1,46 +1,79 @@
-const { exec } = require('child_process');
+using System;
+using System.Diagnostics;
 
-// Function to execute shell commands
-function runCommand(command, callback) {
-  exec(command, (error, stdout, stderr) => {
-    if (error) {
-      console.error(`Error: ${error.message}`);
-      return;
+class Program
+{
+    // Function to execute shell commands
+    static void RunCommand(string command, Action callback)
+    {
+        try
+        {
+            var process = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "cmd.exe",
+                    Arguments = $"/C {command}",
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                }
+            };
+
+            process.Start();
+
+            string stdout = process.StandardOutput.ReadToEnd();
+            string stderr = process.StandardError.ReadToEnd();
+
+            process.WaitForExit();
+
+            if (!string.IsNullOrEmpty(stderr))
+            {
+                Console.Error.WriteLine($"stderr: {stderr}");
+            }
+
+            if (!string.IsNullOrEmpty(stdout))
+            {
+                Console.WriteLine($"stdout: {stdout}");
+            }
+
+            callback?.Invoke();
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"Error: {ex.Message}");
+        }
     }
-    if (stderr) {
-      console.error(`stderr: ${stderr}`);
+
+    // Build job
+    static void BuildJob()
+    {
+        Console.WriteLine("Running Build Job...");
+        RunCommand("bazel build //dotnet:all", () =>
+        {
+            Console.WriteLine("Build Job Completed.");
+        });
     }
-    console.log(`stdout: ${stdout}`);
-    callback();
-  });
-}
 
-// Build job
-function buildJob() {
-  console.log('Running Build Job...');
-  runCommand('bazel build //dotnet:all', () => {
-    console.log('Build Job Completed.');
-  });
-}
+    // Integration Tests job
+    static void IntegrationTestsJob()
+    {
+        Console.WriteLine("Running Integration Tests Job...");
+        RunCommand("fsutil 8dot3name set 0", () =>
+        {
+            RunCommand("bazel test //dotnet/test/common:ElementFindingTest-firefox //dotnet/test/common:ElementFindingTest-chrome --pin_browsers=true", () =>
+            {
+                Console.WriteLine("Integration Tests Job Completed.");
+            });
+        });
+    }
 
-// Integration Tests job
-function integrationTestsJob() {
-  console.log('Running Integration Tests Job...');
-  runCommand('fsutil 8dot3name set 0', () => {
-    runCommand(
-      'bazel test //dotnet/test/common:ElementFindingTest-firefox //dotnet/test/common:ElementFindingTest-chrome --pin_browsers=true',
-      () => {
-        console.log('Integration Tests Job Completed.');
-      }
-    );
-  });
+    // Main function to run the jobs
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Starting CI Jobs...");
+        BuildJob();
+        IntegrationTestsJob();
+    }
 }
-
-// Main function to run the jobs
-function main() {
-  console.log('Starting CI Jobs...');
-  buildJob();
-  integrationTestsJob();
-}
-
-main();
